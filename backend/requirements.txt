@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+groq
+pydantic
+structlog
+sqlalchemy
+alembic
+python-jose[cryptography]
+passlib[bcrypt]
+shortuuid
+python-multipart
