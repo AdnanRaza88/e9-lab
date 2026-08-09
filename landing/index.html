@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E9 — Liquid Glass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --accent: #7C6CF6;
+  --accent-2: #38BDF8;
+  --rose: #FB7185;
+  --amber: #FBBF24;
+  --text: #F5F3FF;
+  --text-muted: #C7C2E8;
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-display: 'Poppins', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #0B0A1F 0%, #150E33 30%, #2A1140 62%, #1A0B22 100%);
+  font-family: var(--font-ui);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+.orb-field {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 900px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.orb-field.cool { top: -80px; }
+.orb-field.warm { top: 980px; height: 700px; }
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.85;
+  animation: drift 14s ease-in-out infinite;
+}
+
+.orb-field.cool .o1 { width: 260px; height: 260px; left: 6%; top: 60px; background: radial-gradient(circle at 30% 30%, #67E8F9, #0EA5E9 70%); filter: blur(6px); animation-duration: 16s; }
+.orb-field.cool .o2 { width: 160px; height: 160px; left: 20%; top: 420px; background: radial-gradient(circle at 30% 30%, #C4B5FD, #7C6CF6 70%); animation-duration: 12s; animation-delay: -3s; }
+.orb-field.cool .o3 { width: 340px; height: 340px; right: 4%; top: 140px; background: radial-gradient(circle at 30% 30%, #F0ABFC, #A855F7 70%); filter: blur(10px); animation-duration: 18s; animation-delay: -6s; }
+.orb-field.cool .o4 { width: 120px; height: 120px; right: 22%; top: 40px; background: radial-gradient(circle at 30% 30%, #99F6E4, #2DD4BF 70%); animation-duration: 10s; }
+.orb-field.cool .o5 { width: 90px; height: 90px; left: 45%; top: 700px; background: radial-gradient(circle at 30% 30%, #FBCFE8, #F472B6 70%); animation-duration: 13s; animation-delay: -5s; }
+.orb-field.cool .o6 { width: 200px; height: 200px; right: 10%; top: 560px; background: radial-gradient(circle at 30% 30%, #BAE6FD, #38BDF8 70%); filter: blur(8px); animation-duration: 15s; animation-delay: -2s; }
+
+.orb-field.warm .o1 { width: 300px; height: 300px; left: 8%; top: 60px; background: radial-gradient(circle at 30% 30%, #FDE68A, #FBBF24 70%); filter: blur(8px); animation-duration: 17s; }
+.orb-field.warm .o2 { width: 180px; height: 180px; right: 12%; top: 40px; background: radial-gradient(circle at 30% 30%, #FDA4AF, #FB7185 70%); animation-duration: 12s; animation-delay: -4s; }
+.orb-field.warm .o3 { width: 260px; height: 260px; right: 26%; top: 320px; background: radial-gradient(circle at 30% 30%, #FECACA, #F87171 70%); filter: blur(7px); animation-duration: 15s; animation-delay: -7s; }
+.orb-field.warm .o4 { width: 130px; height: 130px; left: 30%; top: 380px; background: radial-gradient(circle at 30% 30%, #FDBA74, #FB923C 70%); animation-duration: 11s; }
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(14px, -18px) scale(1.04); }
+}
+
+.glass-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px auto 0;
+  padding: 14px 24px;
+  max-width: 1040px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.logo {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn.large { padding: 13px 24px; font-size: 15px; }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #0B0A1F;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(124, 108, 246, 0.35);
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-ghost:hover { background: rgba(255, 255, 255, 0.16); }
+
+.hero {
+  position: relative;
+  z-index: 1;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 90px 24px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.glass-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 26px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), transparent 45%);
+  pointer-events: none;
+}
+
+.hero-card {
+  padding: 56px 48px;
+  max-width: 680px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--accent-2);
+}
+
+.hero-card h1 {
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1.15;
+  font-weight: 700;
+  margin: 16px 0 18px;
+}
+
+.hero-card p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0 auto 28px;
+  max-width: 520px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.chip-row {
+  display: flex;
+  gap: 14px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.glass-chip {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 210px;
+  transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1);
+}
+
+.glass-chip:hover { transform: translateY(-4px); }
+
+.glass-chip strong {
+  display: block;
+  color: var(--text);
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.proof {
+  position: relative;
+  z-index: 1;
+  max-width: 1040px;
+  margin: 140px auto 0;
+  padding: 0 24px 120px;
+  display: flex;
+  justify-content: center;
+}
+
+.proof-card {
+  padding: 32px 36px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.proof-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.proof-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.proof-score {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--amber);
+}
+
+.proof-max {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.proof-card h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  margin: 0 0 14px;
+}
+
+.proof-quote {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--text-muted);
+  border-left: 2px solid rgba(251, 191, 36, 0.5);
+  padding-left: 12px;
+  margin: 0 0 18px;
+}
+
+.proof-caption {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding-bottom: 40px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .hero-card { padding: 40px 28px; }
+  .hero-card h1 { font-size: 30px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="orb-field cool" aria-hidden="true">
+  <span class="orb o1"></span>
+  <span class="orb o2"></span>
+  <span class="orb o3"></span>
+  <span class="orb o4"></span>
+  <span class="orb o5"></span>
+  <span class="orb o6"></span>
+</div>
+
+<nav class="glass-nav">
+  <span class="logo">E9</span>
+  <div class="nav-links">
+    <a href="#">Product</a>
+    <a href="#">Pricing</a>
+    <a href="#">Docs</a>
+  </div>
+  <div class="nav-actions">
+    <a class="btn btn-ghost" id="navSignIn" href="#">Sign in</a>
+    <a class="btn btn-primary" id="navGetStarted" href="#">Get started</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="glass-card hero-card">
+    <span class="eyebrow">EVIDENCE-BACKED GRADING</span>
+    <h1>Grade lab reports in minutes,<br>not hours.</h1>
+    <p>E9 runs one specialist AI agent per rubric criterion, cites the exact line that justifies each score, and flags disagreements automatically. The weighted total is plain Python, never a language model's guess.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary large" id="heroGetStarted" href="#">Get started</a>
+      <a class="btn btn-ghost large" href="#learn">View the rubric</a>
+    </div>
+  </div>
+
+  <div class="chip-row">
+    <div class="glass-chip"><strong>Evidence-cited</strong>Every score ships with a quoted line from the report.</div>
+    <div class="glass-chip"><strong>Deterministic</strong>Weighted totals and grades are computed in Python, not by the model.</div>
+    <div class="glass-chip"><strong>Disagreement flags</strong>Criteria differing by more than 20 points get held for review.</div>
+  </div>
+</header>
+
+<div class="orb-field warm" aria-hidden="true">
+  <span class="orb o1"></span>
+  <span class="orb o2"></span>
+  <span class="orb o3"></span>
+  <span class="orb o4"></span>
+</div>
+
+<section class="proof" id="learn">
+  <div class="glass-card proof-card">
+    <div class="proof-head">
+      <span class="proof-label">CRITERION</span>
+      <span class="proof-score">92<span class="proof-max">/100</span></span>
+    </div>
+    <h3>Hypothesis clarity</h3>
+    <p class="proof-quote">The report states its hypothesis in the second paragraph, with the independent and dependent variables named explicitly.</p>
+    <p class="proof-caption">Every score ships with the line that justified it — no black box.</p>
+  </div>
+</section>
+
+<footer>
+  E9 · Lab Report Rubric Scorer
+</footer>
+
+<script>
+const APP_URL = "../frontend/login.html";
+document.getElementById("navSignIn").href = APP_URL;
+document.getElementById("navGetStarted").href = APP_URL + "?tab=register";
+document.getElementById("heroGetStarted").href = APP_URL + "?tab=register";
+</script>
+
+</body>
+</html>
