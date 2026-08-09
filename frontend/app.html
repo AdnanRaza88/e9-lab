@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E9 — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="orb-field" aria-hidden="true">
+  <span class="orb o1"></span>
+  <span class="orb o2"></span>
+  <span class="orb o3"></span>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+
+<div class="app-screen">
+
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="brand-mark">E9</span>
+    </div>
+    <nav class="top-nav">
+      <button data-view="score" class="active" type="button">Score</button>
+      <button data-view="rubrics" type="button">Rubrics</button>
+      <button data-view="history" type="button">History</button>
+    </nav>
+    <div class="user-chip">
+      <span class="avatar" id="userAvatar"></span>
+      <span class="username" id="usernameLabel"></span>
+      <button id="logoutBtn" class="btn btn-ghost btn-small" type="button">Log out</button>
+    </div>
+  </header>
+
+  <main>
+
+    <section id="scoreView" class="view active">
+      <section class="card glass floaty">
+        <div class="input-head">
+          <div class="rubric-picker">
+            <label class="field-label" for="rubricSelect">Rubric</label>
+            <select id="rubricSelect" class="field-input"></select>
+          </div>
+          <label class="batch-toggle">
+            <input type="checkbox" id="batchToggle">
+            Batch mode
+          </label>
+        </div>
+
+        <div id="singleReportBlock">
+          <label class="field-label" for="reportText">Report text</label>
+          <textarea id="reportText" class="field-input" rows="10" placeholder="Paste the lab report text here (minimum 200 characters)."></textarea>
+          <span class="char-count mono" id="charCount">0 characters</span>
+        </div>
+
+        <div id="batchReportBlock" hidden>
+          <div id="batchReports" class="batch-reports"></div>
+          <button type="button" id="addBatchReportBtn" class="btn btn-ghost btn-small">+ Add report</button>
+        </div>
+
+        <p class="form-error" id="scoreError" hidden></p>
+
+        <button id="scoreBtn" class="btn btn-primary" type="button" style="margin-top: 16px;">Score report</button>
+      </section>
+
+      <section id="loadingCard" class="card glass loading-card" hidden>
+        <div class="skeleton-ring"></div>
+        <div class="skeleton-lines">
+          <div class="skeleton-line"></div>
+          <div class="skeleton-line short"></div>
+          <div class="skeleton-line"></div>
+        </div>
+        <p class="loading-label">Running specialist agents, one per criterion</p>
+      </section>
+
+      <section id="resultsArea" class="results-area"></section>
+    </section>
+
+    <section id="rubricsView" class="view">
+      <div class="rubrics-layout">
+        <div class="card glass floaty">
+          <div class="section-head">
+            <h2>Your rubrics</h2>
+            <button id="newRubricBtn" class="btn btn-small btn-primary" type="button">New rubric</button>
+          </div>
+          <p class="section-sub">Build a rubric once, reuse it for every report you score.</p>
+          <ul id="rubricList" class="rubric-list" style="margin-top: 16px;"></ul>
+        </div>
+
+        <div class="card glass floaty">
+          <form id="rubricForm" hidden>
+            <h2>New rubric</h2>
+            <label class="field-label" for="rubricTitle">Rubric title</label>
+            <input id="rubricTitle" class="field-input" type="text" required>
+
+            <div id="criteriaRows" class="criteria-rows"></div>
+
+            <button type="button" id="addCriterionBtn" class="btn btn-ghost btn-small" style="margin-top: 10px;">+ Add criterion</button>
+
+            <div class="weight-readout">
+              <span>Total weight (must equal 100)</span>
+              <span id="weightSum" class="mono">0</span>
+            </div>
+
+            <p class="form-error" id="rubricError" hidden></p>
+
+            <div class="form-actions">
+              <button type="button" id="cancelRubricBtn" class="btn btn-ghost btn-small">Cancel</button>
+              <button type="submit" class="btn btn-primary btn-small">Save rubric</button>
+            </div>
+          </form>
+          <p id="rubricFormEmpty" class="empty-note">Select "New rubric" to build one, or pick a rubric from the list to use it for scoring.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="historyView" class="view">
+      <section class="card glass floaty history-table">
+        <div class="section-head">
+          <h2>Scoring history</h2>
+        </div>
+        <p class="section-sub">Every report you've scored, with the grade it landed on.</p>
+        <div id="historyTableWrap" style="margin-top: 12px;"></div>
+      </section>
+      <section id="historyDetail" class="results-area"></section>
+    </section>
+
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
