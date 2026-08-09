@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — E9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="orb-field" aria-hidden="true">
+  <span class="orb o1"></span>
+  <span class="orb o2"></span>
+  <span class="orb o3"></span>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+
+<section class="auth-screen">
+  <div class="auth-card glass floaty">
+    <div class="brand">
+      <span class="brand-mark">E9</span>
+    </div>
+    <h1 class="auth-headline" id="authHeadline">Welcome back</h1>
+    <p class="auth-subline" id="authSubline">Log in to keep grading with your rubrics.</p>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login" type="button">Log in</button>
+      <button class="auth-tab" data-tab="register" type="button">Register</button>
+    </div>
+
+    <form id="loginForm" class="auth-form">
+      <label class="field-label" for="loginUsername">Username</label>
+      <input id="loginUsername" class="field-input" type="text" autocomplete="username" required>
+      <label class="field-label" for="loginPassword">Password</label>
+      <input id="loginPassword" class="field-input" type="password" autocomplete="current-password" required>
+      <p class="form-error" id="loginError" hidden></p>
+      <button type="submit" class="btn btn-primary">Log in</button>
+    </form>
+
+    <form id="registerForm" class="auth-form" hidden>
+      <label class="field-label" for="registerUsername">Username</label>
+      <input id="registerUsername" class="field-input" type="text" autocomplete="username" minlength="3" required>
+      <label class="field-label" for="registerPassword">Password</label>
+      <input id="registerPassword" class="field-input" type="password" autocomplete="new-password" minlength="8" required>
+      <p class="form-hint">At least 8 characters. You won't need anything else to get started.</p>
+      <p class="form-error" id="registerError" hidden></p>
+      <button type="submit" class="btn btn-primary">Create account</button>
+    </form>
+
+    <p class="auth-footer-link" id="footerSwitch">
+      New here? <a href="#" id="switchToRegister">Create an account</a>
+    </p>
+  </div>
+</section>
+
+<script src="auth.js"></script>
+</body>
+</html>

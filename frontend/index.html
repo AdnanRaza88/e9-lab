@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E9</title>
+<style>
+  body { margin: 0; min-height: 100vh; background: #0B0A1F; }
+</style>
+</head>
+<body>
+<script>
+  const token = localStorage.getItem("e9_token");
+  window.location.replace(token ? "app.html" : "login.html");
+</script>
+</body>
+</html>
