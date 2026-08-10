@@ -70,14 +70,6 @@ class RubricCreateRequest(BaseModel):
     title: str
     criteria: list[RubricCriterion]
 
-    @field_validator("criteria")
-    @classmethod
-    def weights_sum_to_100(cls, criteria):
-        total = sum(c.weight for c in criteria)
-        if abs(total - 100) > 0.01:
-            raise ValueError("criteria weights must sum to 100")
-        return criteria
-
 
 class RubricResponse(BaseModel):
     id: str
@@ -104,12 +96,31 @@ class DisagreementFlag(BaseModel):
 
 class ScoreRequest(BaseModel):
     rubric_id: str
-    report_text: str = Field(min_length=200)
+    report_text: str = Field(max_length=70000)
+
+    @field_validator("report_text")
+    @classmethod
+    def check_report_text(cls, report_text):
+        if not report_text or not report_text.strip():
+            raise ValueError("Report cannot be empty.")
+        if len(report_text) < 200:
+            raise ValueError("Report is too short. Minimum 200 characters required.")
+        return report_text
 
 
 class BatchScoreRequest(BaseModel):
     rubric_id: str
     reports: list[str] = Field(min_length=1, max_length=50)
+
+    @field_validator("reports")
+    @classmethod
+    def check_report_sizes(cls, reports):
+        for report in reports:
+            if not report or not report.strip():
+                raise ValueError("Report cannot be empty.")
+            if len(report) > 70000:
+                raise ValueError("Report is too long. Maximum allowed is 10,000 words.")
+        return reports
 
 
 class ScoreCardResponse(BaseModel):
