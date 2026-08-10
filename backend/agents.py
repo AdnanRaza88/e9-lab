@@ -6,7 +6,17 @@ from groq import AsyncGroq
 from models import CriterionScore, ExportJSON, ExportMetadata, ExportScoreEntry
 from logger import log_specialist_call
 
-client = AsyncGroq()
+_client = None
+_TIMEOUT = 90.0
+_MAX_RETRIES = 2
+
+
+def get_client():
+    global _client
+    if _client is None:
+        _client = AsyncGroq(timeout=_TIMEOUT, max_retries=_MAX_RETRIES)
+    return _client
+
 
 MODEL = "llama-3.3-70b-versatile"
 
@@ -34,7 +44,7 @@ def build_tools(criteria):
 
 async def run_specialist(agent_call_id, criterion_name, criterion_description, report_text):
     start = time.monotonic()
-    response = await client.chat.completions.create(
+    response = await get_client().chat.completions.create(
         model=MODEL,
         messages=[
             {
@@ -66,7 +76,7 @@ async def run_specialist(agent_call_id, criterion_name, criterion_description, r
 
 async def run_orchestrator(criteria, report_text, report_id):
     tools = build_tools(criteria)
-    orchestrator_response = await client.chat.completions.create(
+    orchestrator_response = await get_client().chat.completions.create(
         model=MODEL,
         messages=[
             {
@@ -116,7 +126,7 @@ async def json_export_agent(scorecard, criteria):
         raw_quotes={s["name"]: s["evidence_quote"] for s in scorecard.raw_scores}
     )
 
-    response = await client.chat.completions.create(
+    response = await get_client().chat.completions.create(
         model=MODEL,
         messages=[
             {
