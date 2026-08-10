@@ -5,9 +5,6 @@ class GuardrailError(Exception):
 def input_guardrail(report_text, criteria):
     if len(report_text) < 200:
         raise GuardrailError("report below minimum length")
-    total_weight = sum(c["weight"] for c in criteria)
-    if abs(total_weight - 100) > 0.01:
-        raise GuardrailError("rubric weights do not sum to 100")
 
 
 def output_guardrail(scores):
