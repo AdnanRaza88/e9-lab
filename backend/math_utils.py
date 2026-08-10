@@ -1,6 +1,9 @@
 def weighted_total(scores, criteria):
     weight_map = {c["name"]: c["weight"] for c in criteria}
-    total = sum(s.score * weight_map[s.name] for s in scores) / 100
+    total_weight = sum(weight_map.values())
+    if total_weight <= 0:
+        return 0.0
+    total = sum(s.score * weight_map[s.name] for s in scores) / total_weight
     return round(total, 2)
 
 
