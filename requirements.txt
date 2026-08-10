@@ -1,11 +1,2 @@
-fastapi
-uvicorn
-groq
-pydantic
-structlog
-sqlalchemy
-alembic
-python-jose[cryptography]
-passlib[bcrypt]
-shortuuid
-python-multipart
+# Railway/Nixpacks root requirements — backend deps single source of truth
+-r backend/requirements.txt
