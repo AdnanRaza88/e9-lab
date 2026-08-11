@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>E9</title>
-<style>
-  body { margin: 0; min-height: 100vh; background: #0B0A1F; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E9</title>
+  <script>
+    if (localStorage.getItem("e9_token")) {
+      window.location.href = "app.html";
+    } else {
+      window.location.href = "login.html";
+    }
+  </script>
 </head>
 <body>
-<script>
-  const token = localStorage.getItem("e9_token");
-  window.location.replace(token ? "app.html" : "login.html");
-</script>
+  <p style="font-family: system-ui; text-align: center; margin-top: 40vh; color: #A8A2CC;">Redirecting…</p>
 </body>
 </html>
