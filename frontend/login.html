@@ -6,8 +6,8 @@
 <title>Sign in — E9</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="auth.css">
 </head>
 <body>
 
@@ -17,38 +17,70 @@
   <span class="orb o3"></span>
 </div>
 
-<div id="toast" class="toast" hidden></div>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
 <section class="auth-screen">
   <div class="auth-card glass floaty">
+
     <div class="brand">
       <span class="brand-mark">E9</span>
     </div>
+
+    <div class="auth-tabs" role="tablist" aria-label="Choose sign in or register">
+      <button class="auth-tab active" data-tab="login" type="button" role="tab" aria-selected="true" id="tabLogin">Log in</button>
+      <button class="auth-tab" data-tab="register" type="button" role="tab" aria-selected="false" id="tabRegister">Register</button>
+    </div>
+
     <h1 class="auth-headline" id="authHeadline">Welcome back</h1>
     <p class="auth-subline" id="authSubline">Log in to keep grading with your rubrics.</p>
 
-    <div class="auth-tabs">
-      <button class="auth-tab active" data-tab="login" type="button">Log in</button>
-      <button class="auth-tab" data-tab="register" type="button">Register</button>
-    </div>
+    <form id="loginForm" class="auth-form" novalidate>
+      <div class="field">
+        <label class="field-label" for="loginUsername">Username</label>
+        <input id="loginUsername" class="field-input" type="text" autocomplete="username" placeholder="e.g. mrivera" required>
+      </div>
 
-    <form id="loginForm" class="auth-form">
-      <label class="field-label" for="loginUsername">Username</label>
-      <input id="loginUsername" class="field-input" type="text" autocomplete="username" required>
-      <label class="field-label" for="loginPassword">Password</label>
-      <input id="loginPassword" class="field-input" type="password" autocomplete="current-password" required>
-      <p class="form-error" id="loginError" hidden></p>
-      <button type="submit" class="btn btn-primary">Log in</button>
+      <div class="field">
+        <label class="field-label" for="loginPassword">Password</label>
+        <div class="field-input-wrap">
+          <input id="loginPassword" class="field-input" type="password" autocomplete="current-password" placeholder="••••••••" required>
+          <button type="button" class="field-visibility" data-target="loginPassword" aria-label="Show password">
+            <svg class="icon-eye" viewBox="0 0 24 24" fill="none"><path d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <p class="form-error" id="loginError" role="alert" hidden></p>
+
+      <button type="submit" class="btn btn-primary">
+        <span class="btn-label">Log in</span>
+        <svg class="btn-check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path class="check-path" d="M4 12.5L9.5 18L20 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </form>
 
-    <form id="registerForm" class="auth-form" hidden>
-      <label class="field-label" for="registerUsername">Username</label>
-      <input id="registerUsername" class="field-input" type="text" autocomplete="username" minlength="3" required>
-      <label class="field-label" for="registerPassword">Password</label>
-      <input id="registerPassword" class="field-input" type="password" autocomplete="new-password" minlength="8" required>
-      <p class="form-hint">At least 8 characters. You won't need anything else to get started.</p>
-      <p class="form-error" id="registerError" hidden></p>
-      <button type="submit" class="btn btn-primary">Create account</button>
+    <form id="registerForm" class="auth-form" novalidate hidden>
+      <div class="field">
+        <label class="field-label" for="registerUsername">Username</label>
+        <input id="registerUsername" class="field-input" type="text" autocomplete="username" minlength="3" placeholder="Pick something short" required>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="registerPassword">Password</label>
+        <div class="field-input-wrap">
+          <input id="registerPassword" class="field-input" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required>
+          <button type="button" class="field-visibility" data-target="registerPassword" aria-label="Show password">
+            <svg class="icon-eye" viewBox="0 0 24 24" fill="none"><path d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
+        </div>
+        <p class="form-hint">That's the whole form. No email, no verification, straight to grading.</p>
+      </div>
+
+      <p class="form-error" id="registerError" role="alert" hidden></p>
+
+      <button type="submit" class="btn btn-primary">
+        <span class="btn-label">Create account</span>
+        <svg class="btn-check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path class="check-path" d="M4 12.5L9.5 18L20 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </form>
 
     <p class="auth-footer-link" id="footerSwitch">
